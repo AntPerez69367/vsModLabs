@@ -1,0 +1,56 @@
+type Mod {
+  modId: Int!
+  assetId: Int!
+  downloads: Int
+  follows: Int
+  name: String!
+  summary: String
+  modIdStrs: [String]
+  author: String
+  urlAlias: String
+  type: String
+  logo: String
+  tags: [String]
+  lastReleased: String
+}
+
+input CreateModInput {
+  modId: Int!
+  assetId: Int!
+  downloads: Int
+  follows: Int
+  name: String!
+  summary: String
+  modIdStrs: [String]
+  author: String
+  urlAlias: String
+  type: String
+  logo: String
+  tags: [String]
+  lastReleased: String
+}
+
+input UpdateModInput {
+  modId: Int!
+  assetId: Int
+  downloads: Int
+  follows: Int
+  name: String
+  summary: String
+  modIdStrs: [String]
+  author: String
+  urlAlias: String
+  type: String
+  logo: String
+  tags: [String]
+  lastReleased: String
+}
+
+type Query {
+  mods: [Mod]!
+  mod(id: Int!): Mod
+}
+
+type Mutation {
+  updateModDB: [Mod]
+}

@@ -16,7 +16,7 @@ export class ModsResolver {
   }
 
   @Query('mod')
-  findOne(@Args('modid') id: number) {
+  findOne(@Args('id') id: number) {
     return this.modsService.findOne(id);
   }
 }

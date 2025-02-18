@@ -20,15 +20,37 @@ export class ModsService {
   async updateModDB(): Promise<ModEntity[]> {
     const ky = (await import('ky')).default;
     this.logger.log('Fetching all mods from API');
-    const modList: VS_API_RESPONSE = await ky
-      .get('https://mods.vintagestory.at/api/mods/')
-      .json();
+    try {
+      const modList = await ky
+        .get('https://mods.vintagestory.at/api/mods/')
+        .json<VS_API_RESPONSE>();
 
-    const mods = plainToInstance(ModEntity, modList.mods);
-    this.logger.log(`Attempting to save ${mods.length} mods to the database.`);
-    return await this.modRepository.save(mods);
+      const mods = plainToInstance(ModEntity, modList.mods);
+      this.logger.log(
+        `Attempting to save ${mods.length} mods to the database.`,
+      );
+      return await this.modRepository.save(mods);
+    } catch (error) {
+      this.logger.log(`Error while fetching mods ${error}`);
+      return [];
+    }
   }
 
+  async createAll(mods: ModEntity[]): Promise<ModEntity[] | undefined> {
+    const queryRunner = this.modRepository.queryRunner;
+    await queryRunner?.connect();
+    await queryRunner?.startTransaction();
+    try {
+      return await queryRunner?.manager.save(mods);
+    } catch (error) {
+      this.logger.log(
+        `An error happened while attempting to create or update mods ${error}`,
+      );
+      await queryRunner?.rollbackTransaction();
+    } finally {
+      await queryRunner?.release();
+    }
+  }
   async findAll() {
     return await this.modRepository.find();
   }

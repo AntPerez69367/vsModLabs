@@ -1,0 +1,11 @@
+type AuthenticatedUser {
+  id: Int!
+  token: String!
+  role: String
+  username: String
+  email: String
+}
+
+type Mutation {
+  login(username: String!, password: String!): AuthenticatedUser
+}

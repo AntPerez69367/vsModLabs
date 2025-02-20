@@ -40,6 +40,22 @@ export class UpdateModInput {
     lastReleased?: Nullable<string>;
 }
 
+export class AuthenticatedUser {
+    id: number;
+    token: string;
+    role?: Nullable<string>;
+    username?: Nullable<string>;
+    email?: Nullable<string>;
+}
+
+export abstract class IMutation {
+    abstract login(username: string, password: string): Nullable<AuthenticatedUser> | Promise<Nullable<AuthenticatedUser>>;
+
+    abstract updateModDB(): Nullable<Nullable<Mod>[]> | Promise<Nullable<Nullable<Mod>[]>>;
+
+    abstract createUser(username: string, password: string, email: string): Nullable<User> | Promise<Nullable<User>>;
+}
+
 export class Mod {
     modId: number;
     assetId: number;
@@ -60,10 +76,14 @@ export abstract class IQuery {
     abstract mods(): Nullable<Mod>[] | Promise<Nullable<Mod>[]>;
 
     abstract mod(id: number): Nullable<Mod> | Promise<Nullable<Mod>>;
+
+    abstract currentUser(): Nullable<User> | Promise<Nullable<User>>;
 }
 
-export abstract class IMutation {
-    abstract updateModDB(): Nullable<Nullable<Mod>[]> | Promise<Nullable<Nullable<Mod>[]>>;
+export class User {
+    id: number;
+    username: string;
+    email: string;
 }
 
 type Nullable<T> = T | null;

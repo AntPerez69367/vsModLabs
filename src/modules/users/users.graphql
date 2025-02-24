@@ -2,6 +2,13 @@ type User {
   id: Int!
   username: String!
   email: String!
+  roles: [Role!]!
+}
+
+enum Role {
+  admin
+  moderator
+  user
 }
 
 type Query {

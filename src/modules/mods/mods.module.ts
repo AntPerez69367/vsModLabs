@@ -3,9 +3,17 @@ import { ModsService } from './mods.service';
 import { ModsResolver } from './mods.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ModEntity } from './entities/mod.entity';
+import { PermissionsGuard } from '../auth/guards/permissions.guard';
+import { ResourceQueryService } from '../auth/abac/resource.service';
+import ModpacksModule from '../modpacks/modpacks.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ModEntity])],
-  providers: [ModsResolver, ModsService],
+  imports: [TypeOrmModule.forFeature([ModEntity]), ModpacksModule],
+  providers: [
+    ModsResolver,
+    ModsService,
+    ResourceQueryService,
+    PermissionsGuard,
+  ],
 })
-export class ModsModule {}
+export default class ModsModule {}

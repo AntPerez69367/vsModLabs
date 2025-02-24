@@ -1,0 +1,38 @@
+type Modpack {
+  id: Int!
+  name: String!
+  ownerId: Int!
+  mods: [Int]
+  updated: String
+  public: Boolean
+}
+
+input CreateModpackInput {
+  name: String!
+  mods: [Int]
+  public: Boolean
+}
+
+input UpdateModpackInput {
+  name: String
+  mods: [Int]
+  public: Boolean
+}
+
+input AddModToModpackInput {
+  modpackId: Int!
+  modId: Int!
+}
+
+type Query {
+  modpacks: [Modpack]!
+  modpack(id: Int!): Modpack
+  modpacksByUser(username: String): [Modpack]
+}
+
+type Mutation {
+  createModpack(input: CreateModpackInput!): Modpack!
+  updateModpack(id: Int!, input: UpdateModpackInput!): Modpack!
+  addModToModpack(input: AddModToModpackInput): Modpack!
+  removeModpack(id: Int!): Int
+}

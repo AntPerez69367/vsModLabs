@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -16,14 +17,17 @@ export class UsersService {
     username: string,
     password: string,
     email: string,
-  ): Promise<UserEntity> {
-    const newUser = new UserEntity();
-    const hashedPass = await bcrypt.hash(password, 10);
-    newUser.username = username;
-    newUser.password = hashedPass;
-    newUser.email = email;
-    this.logger.log(`Creating user ${newUser.username}`);
-    return this.userRepository.save(newUser);
+  ): Promise<UserEntity | undefined> {
+    try {
+      const newUser = new UserEntity();
+      const hashedPass = await bcrypt.hash(password, 10);
+      newUser.username = username;
+      newUser.password = hashedPass;
+      newUser.email = email;
+      return this.userRepository.save(newUser);
+    } catch (error) {
+      this.logger.log(error);
+    }
   }
 
   async findOneByUsername(username: string): Promise<UserEntity | null> {

@@ -1,7 +1,7 @@
 type AuthenticatedUser {
   id: Int!
   token: String!
-  role: String
+  roles: [Role!]!
   username: String
   email: String
 }

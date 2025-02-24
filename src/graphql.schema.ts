@@ -8,6 +8,29 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum Role {
+    admin = "admin",
+    moderator = "moderator",
+    user = "user"
+}
+
+export class CreateModpackInput {
+    name: string;
+    mods?: Nullable<Nullable<number>[]>;
+    public?: Nullable<boolean>;
+}
+
+export class UpdateModpackInput {
+    name?: Nullable<string>;
+    mods?: Nullable<Nullable<number>[]>;
+    public?: Nullable<boolean>;
+}
+
+export class AddModToModpackInput {
+    modpackId: number;
+    modId: number;
+}
+
 export class CreateModInput {
     modId: number;
     assetId: number;
@@ -43,7 +66,7 @@ export class UpdateModInput {
 export class AuthenticatedUser {
     id: number;
     token: string;
-    role?: Nullable<string>;
+    roles: Role[];
     username?: Nullable<string>;
     email?: Nullable<string>;
 }
@@ -51,9 +74,40 @@ export class AuthenticatedUser {
 export abstract class IMutation {
     abstract login(username: string, password: string): Nullable<AuthenticatedUser> | Promise<Nullable<AuthenticatedUser>>;
 
+    abstract createModpack(input: CreateModpackInput): Modpack | Promise<Modpack>;
+
+    abstract updateModpack(id: number, input: UpdateModpackInput): Modpack | Promise<Modpack>;
+
+    abstract addModToModpack(input?: Nullable<AddModToModpackInput>): Modpack | Promise<Modpack>;
+
+    abstract removeModpack(id: number): Nullable<number> | Promise<Nullable<number>>;
+
     abstract updateModDB(): Nullable<Nullable<Mod>[]> | Promise<Nullable<Nullable<Mod>[]>>;
 
     abstract createUser(username: string, password: string, email: string): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export class Modpack {
+    id: number;
+    name: string;
+    ownerId: number;
+    mods?: Nullable<Nullable<number>[]>;
+    updated?: Nullable<string>;
+    public?: Nullable<boolean>;
+}
+
+export abstract class IQuery {
+    abstract modpacks(): Nullable<Modpack>[] | Promise<Nullable<Modpack>[]>;
+
+    abstract modpack(id: number): Nullable<Modpack> | Promise<Nullable<Modpack>>;
+
+    abstract modpacksByUser(username?: Nullable<string>): Nullable<Nullable<Modpack>[]> | Promise<Nullable<Nullable<Modpack>[]>>;
+
+    abstract mods(): Nullable<Mod>[] | Promise<Nullable<Mod>[]>;
+
+    abstract mod(id: number): Nullable<Mod> | Promise<Nullable<Mod>>;
+
+    abstract currentUser(): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class Mod {
@@ -72,18 +126,11 @@ export class Mod {
     lastReleased?: Nullable<string>;
 }
 
-export abstract class IQuery {
-    abstract mods(): Nullable<Mod>[] | Promise<Nullable<Mod>[]>;
-
-    abstract mod(id: number): Nullable<Mod> | Promise<Nullable<Mod>>;
-
-    abstract currentUser(): Nullable<User> | Promise<Nullable<User>>;
-}
-
 export class User {
     id: number;
     username: string;
     email: string;
+    roles: Role[];
 }
 
 type Nullable<T> = T | null;

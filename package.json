@@ -20,9 +20,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:generate": "npm run typeorm -- migration:generate -d src/config/typeorm.config.ts",
-    "migration:run": "npm run typeorm -- migration:run -d src/config/typeorm.config.ts",
-    "migration:revert": "npm run typeorm -- migration:revert -d src/config/typeorm.config.ts"
+    "migration:generate": "npx typeorm -- migration:generate -d src/config/typeorm.config.ts",
+    "migration:run": "npx typeorm -- migration:run -d src/config/typeorm.config.ts",
+    "migration:revert": "npx typeorm -- migration:revert -d src/config/typeorm.config.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",
@@ -44,7 +44,6 @@
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "ts-morph": "^25.0.1",
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
@@ -74,6 +73,7 @@
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "ts-morph": "^25.0.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
   },

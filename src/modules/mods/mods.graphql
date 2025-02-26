@@ -12,6 +12,7 @@ type Mod {
   logo: String
   tags: [String]
   lastReleased: String
+  details: ModDetail
 }
 
 input CreateModInput {

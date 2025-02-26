@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { Field, ObjectType } from '@nestjs/graphql';
+import { ModDetail } from 'src/modules/moddetails/entities/moddetail.entity';
 
 @Entity()
 @ObjectType()
@@ -61,4 +62,9 @@ export class ModEntity {
   @Column()
   @Expose({ name: 'lastreleased' })
   lastReleased: string;
+
+  @OneToOne(() => ModDetail, (detail) => detail.mod)
+  @JoinColumn({ name: 'modId', referencedColumnName: 'modId' })
+  @Field(() => ModDetail, { nullable: true })
+  details: ModDetail;
 }

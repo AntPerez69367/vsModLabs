@@ -1,0 +1,15 @@
+type ModDetail {
+  modId: Int!
+  name: String!
+  html: String
+  releases: [ModRelease]
+}
+
+type Query {
+  ModDetails: [ModDetail]!
+  ModDetail(id: Int!): ModDetail
+}
+
+type Mutation {
+  updateModDetails(id: Int!): ModDetail!
+}

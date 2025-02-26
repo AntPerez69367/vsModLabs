@@ -57,12 +57,6 @@ const ROLES = {
   },
 } as const satisfies RolesWithPermissions;
 
-export function isValidResource(
-  resource: string,
-): resource is keyof Permissions {
-  return ['modpack', 'mod'].includes(resource.toLowerCase());
-}
-
 export interface PermissionContext<Resource extends keyof Permissions> {
   user: User;
   resource: Resource;

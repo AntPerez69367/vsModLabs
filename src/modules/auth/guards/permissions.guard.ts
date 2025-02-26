@@ -22,13 +22,13 @@ export class PermissionsGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
       const { user, args, info } = this.getContextData(context);
-      console.log(info);
+
       const permissionContext = await this.buildPermissionContext(
         user,
         args,
         info,
       );
-      console.log(permissionContext);
+
       return hasPermission(permissionContext);
     } catch (error: unknown) {
       this.logger.error(`Permission check failed`, error);

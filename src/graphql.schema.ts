@@ -74,6 +74,8 @@ export class AuthenticatedUser {
 export abstract class IMutation {
     abstract login(username: string, password: string): Nullable<AuthenticatedUser> | Promise<Nullable<AuthenticatedUser>>;
 
+    abstract updateModDetails(id: number): ModDetail | Promise<ModDetail>;
+
     abstract createModpack(input: CreateModpackInput): Modpack | Promise<Modpack>;
 
     abstract updateModpack(id: number, input: UpdateModpackInput): Modpack | Promise<Modpack>;
@@ -87,16 +89,18 @@ export abstract class IMutation {
     abstract createUser(username: string, password: string, email: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
-export class Modpack {
-    id: number;
+export class ModDetail {
+    modId: number;
     name: string;
-    ownerId: number;
-    mods?: Nullable<Nullable<number>[]>;
-    updated?: Nullable<string>;
-    public?: Nullable<boolean>;
+    html?: Nullable<string>;
+    releases?: Nullable<Nullable<ModRelease>[]>;
 }
 
 export abstract class IQuery {
+    abstract ModDetails(): Nullable<ModDetail>[] | Promise<Nullable<ModDetail>[]>;
+
+    abstract ModDetail(id: number): Nullable<ModDetail> | Promise<Nullable<ModDetail>>;
+
     abstract modpacks(): Nullable<Modpack>[] | Promise<Nullable<Modpack>[]>;
 
     abstract modpack(id: number): Nullable<Modpack> | Promise<Nullable<Modpack>>;
@@ -108,6 +112,26 @@ export abstract class IQuery {
     abstract mod(id: number): Nullable<Mod> | Promise<Nullable<Mod>>;
 
     abstract currentUser(): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export class Modpack {
+    id: number;
+    name: string;
+    ownerId: number;
+    mods?: Nullable<Nullable<number>[]>;
+    updated?: Nullable<string>;
+    public?: Nullable<boolean>;
+}
+
+export class ModRelease {
+    releaseId: number;
+    modId: number;
+    mainFile: string;
+    fileName: string;
+    fileId: number;
+    tags?: Nullable<Nullable<string>[]>;
+    version: string;
+    created?: Nullable<string>;
 }
 
 export class Mod {
@@ -124,6 +148,7 @@ export class Mod {
     logo?: Nullable<string>;
     tags?: Nullable<Nullable<string>[]>;
     lastReleased?: Nullable<string>;
+    details?: Nullable<ModDetail>;
 }
 
 export class User {

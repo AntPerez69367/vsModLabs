@@ -5,6 +5,9 @@ import AuthModule from './auth/auth.module';
 import UsersModule from './users/users.module';
 import ModsModule from './mods/mods.module';
 import ModpacksModule from './modpacks/modpacks.module';
+import ModDetailsModule from './moddetails/moddetails.module';
+import ModreleaseModule from './modrelease/modrelease.module';
+
 const LocalModules = [
   ConfigModule,
   DatabaseModule,
@@ -13,6 +16,8 @@ const LocalModules = [
   AuthModule,
   UsersModule,
   ModpacksModule,
+  ModDetailsModule,
+  ModreleaseModule,
 ];
 
 export default LocalModules;

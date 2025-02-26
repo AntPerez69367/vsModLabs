@@ -1,0 +1,10 @@
+type ModRelease {
+  releaseId: Int!
+  modId: Int!
+  mainFile: String!
+  fileName: String!
+  fileId: Int!
+  tags: [String]
+  version: String!
+  created: String
+}

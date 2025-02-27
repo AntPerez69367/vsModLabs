@@ -2,7 +2,14 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Expose } from 'class-transformer';
 import { ModRelease } from 'src/modules/modrelease/entities/modrelease.entity';
 import { ModEntity } from 'src/modules/mods/entities/mod.entity';
-import { Entity, Column, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('mod_detail')
 @ObjectType()
@@ -16,6 +23,7 @@ export class ModDetail {
   name: string;
 
   @OneToOne(() => ModEntity, (mod) => mod.details)
+  @JoinColumn({ name: 'modId' })
   mod: ModEntity;
 
   @Column({ type: 'text', nullable: true })

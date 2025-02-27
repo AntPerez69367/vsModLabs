@@ -7,6 +7,7 @@ import ModsModule from './mods/mods.module';
 import ModpacksModule from './modpacks/modpacks.module';
 import ModDetailsModule from './moddetails/moddetails.module';
 import ModreleaseModule from './modrelease/modrelease.module';
+import CacheModule from './cache/cache.module';
 
 const LocalModules = [
   ConfigModule,
@@ -18,6 +19,7 @@ const LocalModules = [
   ModpacksModule,
   ModDetailsModule,
   ModreleaseModule,
+  CacheModule,
 ];
 
 export default LocalModules;

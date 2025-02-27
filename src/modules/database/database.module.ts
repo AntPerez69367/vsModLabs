@@ -1,5 +1,4 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ModSubscriber } from '../mods/entities/mod.subscriber';
 
 const DatabaseModule = TypeOrmModule.forRoot({
   type: 'mariadb',
@@ -12,7 +11,6 @@ const DatabaseModule = TypeOrmModule.forRoot({
   database: process.env.DB_NAME,
   autoLoadEntities: true,
   synchronize: true,
-  subscribers: [ModSubscriber],
 });
 
 export default DatabaseModule;
